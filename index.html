@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Pre-Lab AI: Momentum Fisika</title>
+  <meta name="description" content="Website virtual pre-lab AI materi momentum fisika dengan animasi, pengaturan eksperimen, asisten belajar, dan kuis." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="brand">
+        <span class="brand-icon">⚛</span>
+        <div>
+          <strong>Virtual Pre-Lab AI</strong>
+          <small>Materi Momentum Fisika</small>
+        </div>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#petunjuk">Petunjuk</a>
+        <a href="#materi">Materi</a>
+        <a href="#simulasi">Animasi</a>
+        <a href="#ai">AI Tutor</a>
+        <a href="#kuis">Kuis</a>
+      </div>
+    </nav>
+
+    <section class="hero-content">
+      <div>
+        <p class="eyebrow">Laboratorium virtual berbasis web</p>
+        <h1>Eksplorasi Momentum, Impuls, dan Tumbukan secara Interaktif</h1>
+        <p class="lead">Ubah massa, kecepatan, koefisien tumbukan, dan jenis permukaan untuk memahami bagaimana momentum bekerja dalam berbagai situasi fisika.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#simulasi">Mulai Praktikum</a>
+          <a class="btn secondary" href="#kuis">Kerjakan Kuis</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <canvas id="miniCanvas" width="360" height="220" aria-label="Animasi pembuka momentum"></canvas>
+        <div class="formula">p = m × v &nbsp; | &nbsp; I = F × Δt = Δp</div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="section" id="petunjuk">
+      <div class="section-head">
+        <p class="eyebrow">Langkah awal</p>
+        <h2>Petunjuk Pemakaian</h2>
+      </div>
+      <div class="grid cards-4">
+        <article class="card"><span class="num">1</span><h3>Baca materi</h3><p>Pahami konsep momentum, impuls, tumbukan elastis, tidak elastis, dan perubahan momentum pada benda jatuh.</p></article>
+        <article class="card"><span class="num">2</span><h3>Pilih simulasi</h3><p>Gunakan tab animasi untuk memilih tumbukan, benda jatuh, ledakan dua benda, atau recoil.</p></article>
+        <article class="card"><span class="num">3</span><h3>Atur variabel</h3><p>Ubah massa, kecepatan, koefisien restitusi, gaya, waktu kontak, dan jenis permukaan.</p></article>
+        <article class="card"><span class="num">4</span><h3>Tanya AI Tutor</h3><p>Gunakan kolom AI untuk meminta penjelasan konsep, membaca hasil simulasi, atau mendapatkan petunjuk kuis.</p></article>
+      </div>
+    </section>
+
+    <section class="section alt" id="materi">
+      <div class="section-head">
+        <p class="eyebrow">Dasar teori</p>
+        <h2>Materi Momentum</h2>
+      </div>
+      <div class="material-grid">
+        <article class="material-card">
+          <h3>1. Momentum</h3>
+          <p>Momentum adalah ukuran kuantitas gerak benda. Secara matematis, momentum dirumuskan sebagai <strong>p = m × v</strong>, dengan p adalah momentum, m massa, dan v kecepatan.</p>
+          <p>Momentum merupakan besaran vektor, sehingga arah gerak benda menentukan tanda positif atau negatifnya.</p>
+        </article>
+        <article class="material-card">
+          <h3>2. Impuls</h3>
+          <p>Impuls adalah hasil kali gaya dengan selang waktu gaya bekerja. Rumusnya <strong>I = F × Δt</strong>. Impuls juga sama dengan perubahan momentum, yaitu <strong>I = Δp</strong>.</p>
+          <p>Pada permukaan lunak, waktu kontak lebih lama sehingga gaya rata-rata yang diterima benda dapat lebih kecil.</p>
+        </article>
+        <article class="material-card">
+          <h3>3. Hukum Kekekalan Momentum</h3>
+          <p>Dalam sistem tertutup tanpa gaya luar resultan, jumlah momentum sebelum interaksi sama dengan jumlah momentum setelah interaksi.</p>
+          <div class="math-box">m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'</div>
+        </article>
+        <article class="material-card">
+          <h3>4. Jenis Tumbukan</h3>
+          <p><strong>Elastis sempurna</strong>: momentum dan energi kinetik kekal. <strong>Tidak elastis</strong>: momentum kekal, tetapi sebagian energi kinetik berubah menjadi panas, bunyi, atau deformasi. <strong>Tidak elastis sempurna</strong>: kedua benda bergerak bersama setelah tumbukan.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="simulasi">
+      <div class="section-head">
+        <p class="eyebrow">Praktikum virtual</p>
+        <h2>Animasi dan Setting Objek Praktikum</h2>
+      </div>
+
+      <div class="sim-layout">
+        <aside class="panel controls">
+          <div class="tab-row" role="tablist" aria-label="Pilih simulasi">
+            <button class="tab active" data-sim="collision">Tumbukan</button>
+            <button class="tab" data-sim="drop">Benda Jatuh</button>
+            <button class="tab" data-sim="explosion">Ledakan</button>
+            <button class="tab" data-sim="recoil">Recoil</button>
+          </div>
+
+          <div class="control-group sim-control" data-panel="collision">
+            <h3>Tumbukan 1 Dimensi</h3>
+            <label>Massa benda A: <output id="m1Out">2</output> kg<input type="range" id="m1" min="0.5" max="8" step="0.5" value="2"></label>
+            <label>Massa benda B: <output id="m2Out">3</output> kg<input type="range" id="m2" min="0.5" max="8" step="0.5" value="3"></label>
+            <label>Kecepatan A: <output id="v1Out">3</output> m/s<input type="range" id="v1" min="-8" max="8" step="0.5" value="3"></label>
+            <label>Kecepatan B: <output id="v2Out">-2</output> m/s<input type="range" id="v2" min="-8" max="8" step="0.5" value="-2"></label>
+            <label>Koefisien restitusi e: <output id="eOut">0.80</output><input type="range" id="e" min="0" max="1" step="0.05" value="0.8"></label>
+          </div>
+
+          <div class="control-group sim-control hidden" data-panel="drop">
+            <h3>Benda Jatuh pada Permukaan</h3>
+            <label>Massa benda: <output id="dropMassOut">1.5</output> kg<input type="range" id="dropMass" min="0.5" max="5" step="0.1" value="1.5"></label>
+            <label>Ketinggian awal: <output id="heightOut">6</output> m<input type="range" id="height" min="1" max="12" step="0.5" value="6"></label>
+            <label>Permukaan
+              <select id="surface">
+                <option value="hard">Keras: lantai beton</option>
+                <option value="medium">Sedang: matras tipis</option>
+                <option value="soft">Lunak: busa tebal</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="control-group sim-control hidden" data-panel="explosion">
+            <h3>Ledakan Dua Benda</h3>
+            <label>Massa fragmen A: <output id="exM1Out">2</output> kg<input type="range" id="exM1" min="0.5" max="8" step="0.5" value="2"></label>
+            <label>Massa fragmen B: <output id="exM2Out">4</output> kg<input type="range" id="exM2" min="0.5" max="8" step="0.5" value="4"></label>
+            <label>Energi ledakan relatif: <output id="energyOut">6</output><input type="range" id="energy" min="1" max="12" step="0.5" value="6"></label>
+          </div>
+
+          <div class="control-group sim-control hidden" data-panel="recoil">
+            <h3>Recoil / Tolakan</h3>
+            <label>Massa kereta: <output id="cartMassOut">6</output> kg<input type="range" id="cartMass" min="2" max="15" step="0.5" value="6"></label>
+            <label>Massa bola: <output id="ballMassOut">1</output> kg<input type="range" id="ballMass" min="0.2" max="4" step="0.1" value="1"></label>
+            <label>Kecepatan bola ditembakkan: <output id="launchVelOut">6</output> m/s<input type="range" id="launchVel" min="1" max="14" step="0.5" value="6"></label>
+          </div>
+
+          <div class="button-row">
+            <button class="btn primary" id="startBtn">Mulai</button>
+            <button class="btn secondary" id="resetBtn">Reset</button>
+          </div>
+        </aside>
+
+        <section class="panel canvas-panel">
+          <canvas id="simCanvas" width="900" height="500" aria-label="Kanvas simulasi momentum"></canvas>
+          <div class="readout" id="readout"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section alt" id="ai">
+      <div class="section-head">
+        <p class="eyebrow">Pendamping belajar</p>
+        <h2>AI Tutor Responsif</h2>
+        <p>Asisten ini berjalan lokal di browser, sehingga aman untuk GitHub Pages tanpa API key. Ia dapat menjawab konsep, memberi petunjuk, dan membaca variabel simulasi yang sedang aktif.</p>
+      </div>
+      <div class="ai-layout">
+        <div class="chat panel">
+          <div id="chatBox" class="chat-box">
+            <div class="message bot">Halo! Saya AI Tutor Momentum. Coba tanyakan: “Apa itu momentum?”, “Jelaskan hasil simulasi”, atau “Kenapa permukaan lunak mengurangi gaya?”</div>
+          </div>
+          <form id="chatForm" class="chat-form">
+            <input id="chatInput" type="text" placeholder="Tulis pertanyaanmu di sini..." autocomplete="off" />
+            <button class="btn primary" type="submit">Kirim</button>
+          </form>
+        </div>
+        <div class="panel prompt-card">
+          <h3>Contoh pertanyaan</h3>
+          <button class="prompt">Apa perbedaan tumbukan elastis dan tidak elastis?</button>
+          <button class="prompt">Jelaskan hasil simulasi saat ini.</button>
+          <button class="prompt">Apa hubungan impuls dan momentum?</button>
+          <button class="prompt">Mengapa benda di permukaan lunak lebih aman?</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kuis">
+      <div class="section-head">
+        <p class="eyebrow">Evaluasi akhir</p>
+        <h2>Kuis Pemahaman Momentum</h2>
+        <p>Terdiri atas 10 soal pilihan ganda dan 5 soal uraian singkat.</p>
+      </div>
+      <form id="quizForm" class="quiz panel"></form>
+      <div class="quiz-actions">
+        <button class="btn primary" id="submitQuiz">Periksa Jawaban</button>
+        <button class="btn secondary" id="resetQuiz">Ulangi</button>
+      </div>
+      <div id="quizResult" class="result-box hidden"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Virtual Pre-Lab AI Momentum Fisika · Siap deploy ke GitHub Pages · Dibuat untuk pembelajaran interaktif.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
